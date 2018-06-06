@@ -1,0 +1,36 @@
+<?php require_once _VIEW_PATH . 'common.header.html'; ?>
+    <div class="contents">
+        <div class="box" style="max-width:1200px; width:calc(100% - 40px); margin:0 auto;">
+
+            <h3>개발사 등록/수정<span><button class="btn">팝업닫기</button></span></h3>
+            <table class="table_popup">
+                <tr>
+                    <th scope="col">개발사명</th>
+                    <td><input type="text" class="i_box" value="라이엇게임즈" /></td>
+                    <th scope="col">담당자</th>
+                    <td><input type="text" class="i_box" value="홍길동" /></td>
+                </tr>
+                <tr>
+                    <th scope="col">연락처1</th>
+                    <td><input type="text" class="i_box" placeholder="담당자 핸드폰번호" /></td>
+                    <th scope="col">연락처2</th>
+                    <td><input type="text" class="i_box" placeholder="담당자 직통번호" /></td>
+                </tr>
+                <tr>
+                    <th scope="col">이메일 ID</th>
+                    <td><input type="text" class="i_box" placeholder="" /></td>
+                    <th scope="col">레벨</th>
+                    <td><input type="text" class="ad_box" style="width:50px" value="153"/></td>
+                </tr>
+                <tr>
+                    <th scope="col">파트너 로그인ID</th>
+                    <td colspan="3"><input type="text" class="i_box" placeholder="" /></td>
+                </tr>
+            </table>
+
+            <div class="pager">
+                <button class="btn btn_bottom btn_black">취소</button> <button class="btn btn_bottom btn_red">등록/수정</button>
+            </div>
+        </div>
+    </div>
+<?php require_once _VIEW_PATH . 'footer.html'; ?>

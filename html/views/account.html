@@ -1,0 +1,65 @@
+<?php require_once _VIEW_PATH . 'header.html'; ?>
+
+            <!--상단 히스토리, 데이터로딩-->
+            <div class="history">
+                <span>▶</span>기타<span>▶</span><strong>관리자 리스트</strong>
+            </div>
+
+            <div class="data_loading">
+                <span> IP : 192.168.2.173<strong><a href="#">관리자</a> 님 반갑습니다.</strong></span> <button class="btn" onclick="location.href='login.html';">LOGOUT</button>
+            </div>
+            <!--//상단 히스토리, 데이터로딩-->
+
+
+            <!-- BOX 시작 -->
+
+            <div class="box">
+                <h3>관리자 리스트</h3>
+                <div class="search_box">
+
+                    <input type="text" class="ad_box" placeholder="관리자명" />
+                    <button class="btn btn_black">검색</button> <button class="btn btn_red">등록</button>
+                </div>
+
+
+
+                <select name="" class="" >
+                    <option>50줄</option>
+                    <option>100줄</option>
+                    <option>200줄</option>
+                </select>
+
+                <div class="clear" style="margin-bottom:5px;"></div>
+
+                <table class="table_c table_striped">
+                    <tr>
+                        <th scope="col">관리자명</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">패스워드</th>
+                        <th scope="col">권한</th>
+                    </tr>
+                    <tr>
+                        <td>관리자 1</td>
+                        <td><p>simple1203</p></td>
+                        <td>*******</td>
+                        <td>모든 권한</td>
+                    </tr>
+                    <tr>
+                        <td>관리자 2</td>
+                        <td><p>simple1203</p></td>
+                        <td>5자리</td>
+                        <td><font class="red2">정지</font></td>
+                    </tr>
+                    <tr>
+                        <td>관리자 3</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>최소 권한</td>
+                    </tr>
+                </table>
+                <div class="pager">
+                    <a href="#">Prev</a><a href="#" class="active">1</a><a href="#">2</a><a href="#">3</a><a href="#">4</a><a href="#">5</a><a href="#">6</a><a href="#">7</a><a href="#">8</a><a href="#">10</a><a href="#">Next</a>
+                </div>
+
+            </div>
+<?php require_once _VIEW_PATH . 'footer.html'; ?>

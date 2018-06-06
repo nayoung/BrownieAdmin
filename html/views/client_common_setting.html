@@ -1,0 +1,140 @@
+<?php require_once _VIEW_PATH . 'header.html'; ?>
+
+            <!--상단 히스토리, 데이터로딩-->
+            <div class="history">
+                <span>▶</span>클라이언트<span>▶</span><strong>클라이언트 공통 설정</strong>
+            </div>
+
+            <div class="data_loading">
+                <span> IP : 192.168.2.173<strong><a href="#">관리자</a> 님 반갑습니다.</strong></span> <button class="btn" onclick="location.href='login.html';">LOGOUT</button>
+            </div>
+            <!--//상단 히스토리, 데이터로딩-->
+
+
+            <!-- BOX 시작 -->
+
+            <div class="box">
+                <h3>클라이언트 공통 설정</h3>
+                <div class="search_box">
+
+                    <input type="text" class="ad_box" placeholder="모든 응용프로그램" />
+                    <button class="btn btn_black">검색</button> <button class="btn btn_red">등록</button>
+                </div>
+
+                <select name="" class="" >
+                    <option>50줄</option>
+                    <option>100줄</option>
+                    <option>200줄</option>
+                </select>
+
+                <div class="clear" style="margin-bottom:5px;"></div>
+                <table class="table table_striped">
+                    <tr>
+                        <th scope="col">응용프로그램 이름</th>
+                        <th scope="col">응용프로그램 패키지명</th>
+                        <th scope="col">Job 집행</th>
+                        <th scope="col">비고</th>
+                    </tr>
+                    <tr>
+                        <td>Set_update </td>
+                        <td class="taL">클라이언트  공통 설정 정보, 언어별 설정, 응용프로그램 설정을 확인하는 주기</td>
+                        <td><input type="text" class="i_box" style="width:40px" value="" />
+                            시간</td>
+                        <td>설명 없음</td>
+                    </tr>
+                    <tr>
+                        <td>Set_miss </td>
+                        <td class="taL">Set_Update 수신 실패시 재확인 주기</td>
+                        <td><input type="text" class="i_box" style="width:40px" value="" />
+                            시간</td>
+                        <td>내용 없음</td>
+                    </tr>
+                    <tr>
+                        <td>Job_update </td>
+                        <td class="taL">Job정보 확인 주기</td>
+                        <td><input type="text" class="i_box" style="width:40px" value="" />
+                            시간</td>
+                        <td>내용 없음</td>
+                    </tr>
+                    <tr>
+                        <td>Job_miss </td>
+                        <td class="taL">Job정보 수신 실패시 재확인 주기</td>
+                        <td><input type="text" class="i_box" style="width:40px" value="" />
+                            시간</td>
+                        <td>내용 없음</td>
+                    </tr>
+                    <tr>
+                        <td>Job_expired /td>
+                        <td class="taL">Job정보 유효 시간</td>
+                        <td><input type="text" class="i_box" style="width:40px" value="" />
+                            시간</td>
+                        <td>이 시간이 지난 Job 정보는 무효 처리함</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                </table>
+                <div class="pager">
+                    <a href="#">Prev</a><a href="#" class="active">1</a><a href="#">2</a><a href="#">3</a><a href="#">4</a><a href="#">5</a><a href="#">6</a><a href="#">7</a><a href="#">8</a><a href="#">10</a><a href="#">Next</a>
+                </div>
+
+            </div>
+
+<?php require_once _VIEW_PATH . 'footer.html'; ?>

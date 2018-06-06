@@ -1,0 +1,70 @@
+<?php require_once _VIEW_PATH . 'header.html'; ?>
+
+            <!--상단 히스토리, 데이터로딩-->
+            <div class="history">
+                <span>▶</span>기타<span>▶</span><strong>권한그룹 리스트</strong>
+            </div>
+
+            <div class="data_loading">
+                <span> IP : 192.168.2.173<strong><a href="#">관리자</a> 님 반갑습니다.</strong></span> <button class="btn" onclick="location.href='login.html';">LOGOUT</button>
+            </div>
+            <!--//상단 히스토리, 데이터로딩-->
+
+
+            <!-- BOX 시작 -->
+
+            <div class="box">
+                <h3>개발사 리스트</h3>
+                <div class="search_box">
+
+                    <input type="text" class="ad_box" placeholder="개발사명" />
+                    <button class="btn btn_black">검색</button> <button class="btn btn_red">등록</button>
+                </div>
+
+
+
+                <select name="" class="" >
+                    <option>50줄</option>
+                    <option>100줄</option>
+                    <option>200줄</option>
+                </select>
+
+                <div class="clear" style="margin-bottom:5px;"></div>
+                <table class="table_c table_striped">
+                    <tr>
+                        <th scope="col">개발사명</th>
+                        <th scope="col">담당자</th>
+                        <th scope="col">연락처</th>
+                        <th scope="col">연락처2</th>
+                        <th scope="col">이메일</th>
+                    </tr>
+                    <tr>
+                        <td>개발사 갑</td>
+                        <td>홍길동</td>
+                        <td>010-2710-7965</td>
+                        <td>070-4113-7965</td>
+                        <td>simple1203@gmail.com</td>
+                    </tr>
+                    <tr>
+                        <td>개발사 을</td>
+                        <td><p>-</p></td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>개발사 병</td>
+                        <td>-</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                </table>
+                <!-- 적용하기 추가 16.09.22 -->
+                <div class="pager">
+                    <button class="btn btn_bottom btn_blue">적용하기</button>
+                </div>
+
+
+            </div>
+<?php require_once _VIEW_PATH . 'footer.html'; ?>

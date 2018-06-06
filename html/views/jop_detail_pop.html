@@ -1,0 +1,176 @@
+<?php require_once _VIEW_PATH . 'common.header.html'; ?>
+    <style>
+        .tab{ position:relative; margin:0; padding:0; width:100%; height:42px; }
+        .tab li{position:relative; float:left; cursor:pointer; overflow:hidden; width:calc(33% + 1px); max-width:150px;  height:40px; text-align:center; line-height:40px; border:1px solid #575757; border-left:none; background:#fff; font-size:18px; color:#666; border-radius:15px 15px 0 0}
+        .tab li.active {background:#575757; border-bottom:1px solid #575757; color:#fff }
+        .tab li:first-child{ border-left:1px solid #575757;}
+        .tab a:hover { text-decoration:none }
+        .tab_container { width:100%; border-top:none; clear:both; margin-top:-20px}
+        .tab_content { width:calc(100% - 3px); min-height:200px; height:auto; padding:0; display:none; }
+
+    </style>
+
+    <script>
+        // tab
+        $(function(){
+            $(".tab_content").hide();
+            $(".tab_content:first").show();
+            $("ul.tab li").mouseenter(function(){
+                $("ul.tab li").removeClass("active").css("color", "#000");
+                $(this).addClass("active").css("color", "#fff");
+                $(".tab_content").hide()
+                var activeTab = $(this).attr("rel");
+                $("#" + activeTab).show()
+            });
+        });
+    </script>
+
+
+    <div class="contents">
+        <div class="box" style="max-width:1200px; width:calc(100% - 40px); margin:0 auto;">
+
+            <h3>Job 등록/수정</h3>
+
+            <ul class="tab">
+                <li class="active" rel="tab_01" >Job 실행옵션</li>
+                <li rel="tab_02">Job 내용</li>
+            </ul>
+
+            <div class="tab_container">
+
+                <!--1-->
+                <div id="tab_01" class="tab_content">
+                    <table class="table_popup" >
+                        <tr>
+                            <th scope="col">Job  언어</th>
+                            <td><input name="nation" type="radio" id="nation_kr" onfocus="this.blur()"  onclick="" value="kr" checked/>
+                                <label for="nation_kr">한국어</label>&nbsp;&nbsp;
+                                <input type="radio" name="nation" value="en" id="nation_en"  onclick="" onfocus="this.blur()"/>
+                                <label for="nation_en">영어</label>&nbsp;&nbsp;
+                                <input type="radio" name="nation" value="jp" id="nation_jp"  onclick="" onfocus="this.blur()"/>
+                                <label for="nation_jp">일본어</label></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">상태</th>
+                            <td><input name="condition" type="radio" id="condition01" onfocus="this.blur()"  onclick="" value="정상" checked/>
+                                <label for="condition01">정상</label>
+                                &nbsp;&nbsp;
+                                <input type="radio" name="condition" value="정지" id="condition02"  onclick="" onfocus="this.blur()"/>
+                                <label for="condition02">정지</label>
+                                &nbsp;&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">광고명</th>
+                            <td><select name="select2">
+                                <option>선택</option>
+                                <option>OPTION1</option>
+                                <option>OPTION2</option>
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Job 이름</th>
+                            <td><input type="text" class="i_box" /></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">가중치</th>
+                            <td><input type="text" class="i_box" /></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">클라이언트 최소버전</th>
+                            <td><select name="select">
+                                <option>선택</option>
+                                <option>OPTION1</option>
+                                <option>OPTION2</option>
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">동일 Job 실행제한</th>
+                            <td><input type="text" class="i_box" />
+                                분</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">일정</th>
+                            <td><input type="date" class="i_box" /> <input type="time" class="i_box" />
+                                ~
+                                <input type="date" class="i_box" /> <input type="time" class="i_box" /></td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                <!--2-->
+                <div id="tab_02" class="tab_content">
+                    <table class="table_popup">
+                        <tr>
+                            <th scope="col">Step 순서</th>
+                            <td>Action Type</td>
+                            <td>체류시간(초)</td>
+                            <td>Step별 Action 정의</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">1</th>
+                            <td><select name="select3">
+                                <option>랜덤 웹호출 </option>
+                                <option>지정 웹호출 </option>
+                                <option>텍스트 검색 </option>
+                                <option>돌아가기 </option>
+                            </select></td>
+                            <td><input type="text" class="i_box" style="width:20px" value="4" /> / <input type="text" class="i_box" style="width:20px" value="40" /></td>
+                            <td><input type="text" placeholder="URL" class="i_box" style="width:calc(100% - 60px)" /><button class="btn_add">+</button>
+                                <input type="text" placeholder="URL" class="i_box" style="width:calc(100% - 60px)" /><button class="btn_add">+</button><button class="btn_del">-</button>
+                                <input type="text" placeholder="URL" class="i_box" style="width:calc(100% - 60px)" /><button class="btn_add">+</button><button class="btn_del">-</button>
+                                <input type="text" placeholder="URL" class="i_box" style="width:calc(100% - 60px)" /><button class="btn_add">+</button><button class="btn_del">-</button></td>
+                            <td><button class="btn_add2">+</button></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">2</th>
+                            <td><select name="select3">
+                                <option>랜덤 웹호출 </option>
+                                <option>지정 웹호출 </option>
+                                <option>텍스트 검색 </option>
+                            </select></td>
+                            <td><input type="text" class="i_box" style="width:20px" value="4" /> / <input type="text" class="i_box" style="width:20px" value="40" /></td>
+                            <td><input type="text" placeholder="URL" class="i_box" style="width:calc(100% - 60px)" /><button class="btn_add">+</button>
+                                <input type="text" placeholder="URL" class="i_box" style="width:calc(100% - 60px)" /><button class="btn_add">+</button><button class="btn_del">-</button>
+                                <input type="text" placeholder="URL" class="i_box" style="width:calc(100% - 60px)" /><button class="btn_add">+</button><button class="btn_del">-</button>
+                                <input type="text" placeholder="URL" class="i_box" style="width:calc(100% - 60px)" /><button class="btn_add">+</button><button class="btn_del">-</button></td>
+                            <td><button class="btn_add2">+</button><button class="btn_del2">-</button></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">3</th>
+                            <td><select name="select4">
+                                <option>지정 웹호출 </option>
+                            </select></td>
+                            <td><input type="text" class="i_box" style="width:20px" value="4" /> / <input type="text" class="i_box" style="width:20px" value="40" /></td>
+                            <td><input type="text" placeholder="URL" class="i_box" style="width:calc(100% - 60px)" /></td>
+                            <td><button class="btn_add2">+</button><button class="btn_del2">-</button></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">4</th>
+                            <td><select name="select4">
+                                <option>텍스트 검색 </option>
+                            </select></td>
+                            <td><input type="text" class="i_box" style="width:20px" value="4" /> / <input type="text" class="i_box" style="width:20px" value="40" /></td>
+                            <td><input type="text" placeholder="입력 Text" class="i_box" style="width:calc(100% - 60px)" /><input type="text" placeholder="입력 경로" class="i_box" style="width:calc(100% - 60px)" /></td>
+                            <td><button class="btn_add2">+</button><button class="btn_del2">-</button></td>
+                        </tr>
+                        <tr>
+                            <th scope="col">5</th>
+                            <td><select name="select5">
+                                <option>돌아가기 </option>
+                            </select></td>
+                            <td><input type="text" class="i_box" style="width:20px" value="4" /> / <input type="text" class="i_box" style="width:20px" value="40" /></td>
+                            <td>&nbsp;</td>
+                            <td><button class="btn_add2">+</button><button class="btn_del2">-</button></td>
+                    </table>
+                    </h4>
+                </div>
+            </div>
+
+            <div class="pager">
+                <button class="btn btn_bottom btn_black">취소</button> <button class="btn btn_bottom btn_red">등록/수정</button>
+            </div>
+        </div>
+    </div>
+<?php require_once _VIEW_PATH . 'footer.html'; ?>
