@@ -1,11 +1,16 @@
 <?php
 require_once dirname(__FILE__) . '/../../conf/config.php';
 
-switch ($request['act']) {
+switch ($act) {
     case 'login' :
-        $account = new Account;
-        if ($account->doLogin($request) == true) {
-            $url = FIRST_PAGE;
+        include_once _VIEW_PATH . 'login.html';
+        break;
+
+    case 'loginPre' :
+        $admin = new Admin;
+        if ($admin->doLogin($request) == true) {
+
+            $url = _WEB_ROOT . '/';
             include_once _VIEW_PATH . 'redirect.html';
         }
 
@@ -16,9 +21,15 @@ switch ($request['act']) {
         break;
 
     case 'logout' :
+        $admin = new Admin;
+        $admin->doLogout();
+
+        $url = _HTTP_HOST . _WEB_ROOT;
+        include_once _VIEW_PATH . 'redirect.html';
+
         break;
 
-    case 'default' :
+    default :
         break;
 }
 

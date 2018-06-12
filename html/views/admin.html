@@ -1,0 +1,52 @@
+<?php require_once _VIEW_PATH . 'header.html'; ?>
+
+            <!--상단 히스토리, 데이터로딩-->
+            <div class="history">
+                <span>▶</span>기타<span>▶</span><strong>관리자 리스트</strong>
+            </div>
+
+            <div class="data_loading">
+                <span> IP : <?=$_SERVER['REMOTE_ADDR']?><strong><a href="#"><?=$_SESSION['admin']['name']?></a> 님 반갑습니다.</strong></span>
+                <button class="btn" onclick="location.href='<?=_WEB_ROOT?>/login.php?act=logout';">LOGOUT</button>
+            </div>
+            <!--//상단 히스토리, 데이터로딩-->
+
+
+            <!-- BOX 시작 -->
+
+            <div class="box">
+                <h3>관리자 리스트</h3>
+                <form name="frm_search" action="" method="GET">
+                <div class="search_box">
+                    <input type="text" name="name" class="ad_box" value="<?=$request['name']?>" placeholder="관리자명" />
+                    <button type="submit" class="btn btn_black">검색</button> <button typt="button" class="btn btn_red">등록</button>
+                </div>
+
+                <select name="scale" class="">
+                    <option value="50" <?=($request['scale'] == 50)?'selected="selected"':''?>>50줄</option>
+                    <option value="100" <?=($request['scale'] == 100)?'selected="selected"':''?>>100줄</option>
+                    <option value="200" <?=($request['scale'] == 200)?'selected="selected"':''?>>200줄</option>
+                </select>
+                </form>
+                <div class="clear" style="margin-bottom:5px;"></div>
+
+                <table class="table_c table_striped">
+                    <tr>
+                        <th scope="col">관리자명</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">패스워드</th>
+                        <th scope="col">권한</th>
+                    </tr>
+                    <?php foreach ($list as $l):?>
+                    <tr>
+                        <td><?=$l['name']?></td>
+                        <td><p><?=$l['id']?></p></td>
+                        <td>*******</td>
+                        <td>모든 권한</td>
+                    </tr>
+                    <?php endforeach;?>
+                </table>
+                <?=$page_html?>
+
+            </div>
+<?php require_once _VIEW_PATH . 'footer.html'; ?>

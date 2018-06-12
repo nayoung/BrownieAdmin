@@ -4,17 +4,18 @@
         <div class="login_tit">Brownie Service <span>admin</span></div>
 
         <div class="login">
-            <form name="frm_login" id="frm-login" action="/login.php?act=login" method="POST">
+            <form name="frm_login" id="frm-login" action="<?=_WEB_ROOT?>/login.php" method="POST">
+                <input type="hidden" name="act" value="loginPre">
             <table>
                 <tr>
                     <td>
-                        <input name="account_id" class="id" type="text" tabindex="1" placeholder="ID" style="width:180px">
+                        <input name="id" class="id" type="text" tabindex="1" placeholder="ID" style="width:180px">
                     </td>
                     <td width="100" rowspan="2" valign="middle"><button type="submit" class="btn btn_black btn_login">Login</button></td>
                 </tr>
                 <tr>
                     <td>
-                        <input name="account_passwd" class="pw" type="password" tabindex="2" placeholder="Password" maxlength="20" style="width:180px" >
+                        <input name="password" class="pw" type="password" tabindex="2" placeholder="Password" maxlength="20" style="width:180px" >
                     </td>
                 </tr>
                 <!--
@@ -39,11 +40,11 @@
     <script>
         $(function() {
             $('#frm-login').submit(function() {
-                if ($.trim($(this).find('input[name=account_id]').val()).length == 0) {
+                if ($.trim($(this).find('input[name=id]').val()).length == 0) {
                     alert('아이디를 입력해 주세요.');
                     return false;
                 }
-                if ($.trim($(this).find('input[name=account_passwd]').val()).length == 0) {
+                if ($.trim($(this).find('input[name=password]').val()).length == 0) {
                     alert('패스워드를 입력해 주세요.');
                     return false;
                 }

@@ -96,3 +96,15 @@ $(document).ready(function() {
 	});
 
 });
+
+
+$(function() {
+	// 검색 scale
+	$('form[name=frm_search] select[name=scale]').on('change', function(e) {
+		e.preventDefault();
+
+		$(this).closest('form[name=frm_search]').submit();
+	});
+
+
+});

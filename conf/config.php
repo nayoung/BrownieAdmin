@@ -6,12 +6,15 @@ define('_DOCUMENT_ROOT',	$rootPath);
 define('_CONFIG_PATH',		_DOCUMENT_ROOT . 'conf/');
 define('_LIB_PATH',			_DOCUMENT_ROOT . 'lib/');
 define('_HOME_PATH',		_DOCUMENT_ROOT . 'html/');
+
 define('_MODEL_PATH',		_HOME_PATH . 'models/');
 define('_VIEW_PATH',		_HOME_PATH . 'views/');
 
-define('_SCRIT_PATH',		'/html/views/script/');
-define('_CSS_PATH',		    '/html/views/css/');
-define('_IMAGE_PATH',		'/html/views/image/');
+define('_WEB_ROOT',		    '/controllers');
+
+define('_SCRIPT_PATH',		'/views/script/');
+define('_CSS_PATH',		    '/views/css/');
+define('_IMAGE_PATH',		'/views/images/');
 
 $httpHost = $_SERVER['HTTP_HOST'];
 define('_HTTP_HOST', 'http://' . $httpHost);
@@ -44,20 +47,32 @@ $http_request = new Request($_GET, $_POST, $_FILE, $_SERVER, $_COOKIE);
 $request = $http_request->getRequest();
 
 session_start();
-define('FIRST_PAGE', $_SESSION['first_page']);
 //echo "<pre>";print_r($_SERVER);
 //exit;
 
-// session없을경우 로그인으로 이동
-if (!in_array($_SERVER['PHP_SELF'], array("/index.php", "/login.php")) && !in_array($request['act'], array('login', 'logout'))
-    && Account::isLogin() == false) {
-    $url = '/index.php';
+if (!in_array($_SERVER['PHP_SELF'], array(_WEB_ROOT . "/login.php")) && Admin::isLogin() == false) {
+    // 로그인/로그아웃 페이지 아닌경우 + 로그인 전
+    $url = _WEB_ROOT . '/login.php?act=login';
+   include_once _VIEW_PATH . 'redirect.html';
+
+} else if (in_array($_SERVER['PHP_SELF'], array(_WEB_ROOT . "/login.php")) && $request['act'] == 'login' && Admin::isLogin() == true) {
+    // 로그인 페이지 + 로그인중
+    $url = $_SESSION['first_page'];
     include_once _VIEW_PATH . 'redirect.html';
-} else if (false) {
+}
+
+if (false) {
     // 권한 없을경우..
     $message = '권한이 없습니다. 관리자에게 문의하세요.';
     $back = true;
     include_once _VIEW_PATH . 'redirect.html';
 }
-//로그인 후, 로그 클릭시 이동페이지
+
+$act = $request['act'];
+unset($request['act']);
+
+
+//echo"<pre>";
+//print_r($_SESSION);
+//echo"</pre>";
 
