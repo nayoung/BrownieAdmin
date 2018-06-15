@@ -12,17 +12,49 @@ class Admin
         global $db_con;
         $password = hash('sha256', $request['password']);
 
-        $query =<<<SQL
-            SELECT * FROM `admin` WHERE id = '{$request['id']}' AND password = '{$password}'
-SQL;
-        $admin = $db_con->getRow($query);
+        $admin = new Admin;
+        $admin_list = $admin->getList(array('id' => $request['id'], 'password' => $password ));
 
-        if (sizeof($admin) == 0 ) {
+        if (sizeof($admin_list) == 0 ) {
             return false;
         }
 
-        $_SESSION['admin'] = $admin;
-        $_SESSION['first_page'] = _WEB_ROOT . "/admin.php";
+        $first_page = '';
+        $path = array();
+        $auth_array = array();
+
+        $auth = new Auth;
+        $auth_list = $auth->getList(array('`auth_menu`.auth' => $admin_list[0]['auth']));
+        foreach ($auth_list as $a) {
+            $auth_array[$a['menu']] = $a;
+        }
+
+        $menu = new Menu;
+        $menu_list = $menu->getList(array(), 0, 0, array('`menu`.parent_id ASC', '`menu`.id ASC'));
+        foreach ($menu_list as $idx => $m) {
+            if ((int) $m['parent_id'] > 0 && sizeof($path[$m['parent_id']]) > 0) {
+                $path[$m['parent_id']][] = array('menu' => $m, 'auth' => $auth_array[$m['id']]);
+            } else if ((int) $m['parent_id'] == 0) {
+                $path[$m['id']][] = array('menu' => $m, 'auth' => $auth_array[$m['id']]);
+            }
+
+            if ($first_page == '' && $auth_array[$m['id']]['read'] == 'Y') {
+                $first_page = $m['url'];
+            }
+        }
+
+        /*
+        echo"<pre>";
+        echo"===";
+print_r($menu_list);
+print_r($path);
+
+echo "<br/>".$first_page."<br/>";
+        exit;
+        */
+
+        $_SESSION['admin'] = $admin_list[0];
+        $_SESSION['first_page'] = _WEB_ROOT . "/" . $first_page;
         $_SESSION['path'] = array();
 
         return true;
@@ -86,14 +118,16 @@ SQL;
         }
 
         $query =<<<SQL
-            SELECT * FROM `{$this->table}` {$where} 
+            SELECT *
+            , (SELECT name FROM `auth` WHERE `auth`.id = `admin`.auth) AS auth_name
+            FROM `{$this->table}` {$where} 
 SQL;
-        if ((int) $limit > 0) {
-            $query .= ' LIMIT ' . $offset . ', '.$limit;
-        }
-
         if (sizeof($order_by) > 0) {
             $query .= ' ORDER BY ' . join(',', $order_by);
+        }
+
+        if ((int) $limit > 0) {
+            $query .= ' LIMIT ' . $offset . ', '.$limit;
         }
 
         $list = $db_con->getAll($query);

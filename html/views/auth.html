@@ -6,34 +6,23 @@
             </div>
 
             <div class="data_loading">
-                <span> IP : 192.168.2.173<strong><a href="#">관리자</a> 님 반갑습니다.</strong></span> <button class="btn" onclick="location.href='login.html';">LOGOUT</button>
+                <span> IP : <?=$_SERVER['REMOTE_ADDR']?><strong><a href="#"><?=$_SESSION['admin']['name']?></a> 님 반갑습니다.</strong></span>
+                <button class="btn" onclick="location.href='<?=_WEB_ROOT?>/login.php?act=logout';">LOGOUT</button>
             </div>
             <!--//상단 히스토리, 데이터로딩-->
 
-
             <!-- BOX 시작 -->
-
             <div class="box">
                 <h3>권한그룹 리스트</h3>
+                <form name="frm_auth" action="" method="GET">
                 <div class="search_box">
-
-                    <select name="select" >
-                        <option>최고관리자</option>
-                        <option>운영</option>
-                        <option>기타</option>
+                    <select name="auth">
+                        <?php foreach ($list as $l):?>
+                        <option value="<?=$l['id']?>" <?=($l['id'] == $request['auth'])?'selected="selected"':''?>><?=$l['name']?></option>
+                        <?php endforeach;?>
                     </select>
-
-
-                    <button class="btn btn_black">권한그룹 이름 수정</button> <button class="btn btn_red">권한그룹 등록</button>
+                    <button type="button" class="btn btn_black btn-modify">권한그룹 이름 수정</button> <button type="button" class="btn btn_red btn-register">권한그룹 등록</button>
                 </div>
-
-
-
-                <select name="" class="" >
-                    <option>50줄</option>
-                    <option>100줄</option>
-                    <option>200줄</option>
-                </select>
 
                 <div class="clear" style="margin-bottom:5px;"></div>
 
@@ -143,9 +132,22 @@
 
                 <!-- 적용하기 추가 16.09.22 -->
                 <div class="pager">
-                    <button class="btn btn_bottom btn_blue">적용하기</button>
+                    <button type="submit" class="btn btn_bottom btn_blue">적용하기</button>
                 </div>
-
-
+                </form>
             </div>
+<script type="text/javascript">
+    $(function () {
+        var frm = $('form[name=frm_auth]');
+
+        $('.btn-register').on('click', function (e) {
+            e.preventDefault();
+            popupOpen('<?=_WEB_ROOT?>/auth.php?act=registerPop', 'authRegister', 700, 250);
+        });
+        $('.btn-modify').on('click', function (e) {
+            e.preventDefault();
+            popupOpen('<?=_WEB_ROOT?>/auth.php?act=registerPop&id=' + frm.find('[name=auth]').val(), 'authModify', 700, 250);
+        });
+    });
+</script>
 <?php require_once _VIEW_PATH . 'footer.html'; ?>

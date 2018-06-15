@@ -106,5 +106,20 @@ $(function() {
 		$(this).closest('form[name=frm_search]').submit();
 	});
 
+	$('.btn-popup-close').on('click', function(e) {
+		e.preventDefault();
+
+		if (window.opener) {
+			self.close();
+		}
+	});
 
 });
+
+var popupOpen = function (url, title, width = 500, height = 300) {
+    if (url.length == 0 || title.length == 0) {
+        return false;
+    }
+    var popup = window.open(url, title, "width="+width+",height="+height);
+    popup.focus();
+};

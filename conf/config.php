@@ -48,6 +48,7 @@ $request = $http_request->getRequest();
 
 session_start();
 //echo "<pre>";print_r($_SERVER);
+//echo "<pre>";print_r($_SESSION);
 //exit;
 
 if (!in_array($_SERVER['PHP_SELF'], array(_WEB_ROOT . "/login.php")) && Admin::isLogin() == false) {

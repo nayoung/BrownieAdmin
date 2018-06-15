@@ -19,7 +19,7 @@
                 <form name="frm_search" action="" method="GET">
                 <div class="search_box">
                     <input type="text" name="name" class="ad_box" value="<?=$request['name']?>" placeholder="관리자명" />
-                    <button type="submit" class="btn btn_black">검색</button> <button typt="button" class="btn btn_red">등록</button>
+                    <button type="submit" class="btn btn_black">검색</button> <button typt="button" class="btn btn_red btn-register">등록</button>
                 </div>
 
                 <select name="scale" class="">
@@ -42,11 +42,18 @@
                         <td><?=$l['name']?></td>
                         <td><p><?=$l['id']?></p></td>
                         <td>*******</td>
-                        <td>모든 권한</td>
+                        <td><?=$l['auth_name']?></td>
                     </tr>
                     <?php endforeach;?>
                 </table>
                 <?=$page_html?>
-
             </div>
+<script type="text/javascript">
+    $(function () {
+        $('.btn-register').on('click', function (e) {
+            e.preventDefault();
+            popupOpen('<?=_WEB_ROOT?>/admin.php?act=registerPop', 'adminRegister', 700, 250);
+        });
+    });
+</script>
 <?php require_once _VIEW_PATH . 'footer.html'; ?>

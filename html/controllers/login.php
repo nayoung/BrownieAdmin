@@ -6,11 +6,11 @@ switch ($act) {
         include_once _VIEW_PATH . 'login.html';
         break;
 
-    case 'loginPre' :
+    case 'loginPrc' :
         $admin = new Admin;
         if ($admin->doLogin($request) == true) {
 
-            $url = _WEB_ROOT . '/';
+            $url = $_SESSION['first_page'];
             include_once _VIEW_PATH . 'redirect.html';
         }
 

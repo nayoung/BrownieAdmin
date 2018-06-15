@@ -13,6 +13,16 @@
 <?php exit;
 endif; ?>
 
+<?php if ($close == true):?>
+<script type="text/javascript">
+    if (window.opener) {
+        window.opener.location.reload();
+        self.close();
+    }
+</script>
+<?php exit;
+endif; ?>
+
 <?php
     $url = (strlen($url) > 0) ? $url: $_SERVER['HTTP_REFERER'];
     if (strlen($url) > 0):?>
