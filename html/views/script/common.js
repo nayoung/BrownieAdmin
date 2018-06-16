@@ -114,6 +114,11 @@ $(function() {
 		}
 	});
 
+	$('.menu_all a.deny,#leftmenu a.deny').on('click', function(e) {
+		e.preventDefault();
+		return alert('권한이 없습니다. 관리자에게 문의하세요.');
+	});
+
 });
 
 var popupOpen = function (url, title, width = 500, height = 300) {

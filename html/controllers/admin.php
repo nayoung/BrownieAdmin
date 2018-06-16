@@ -3,6 +3,7 @@ require_once dirname(__FILE__) . '/../../conf/config.php';
 
 switch ($act) {
     case 'registerPop' :
+        Auth::getAuth('19', 'read');
 
         $auth = new Auth;
         $auth_list = $auth->getList();
@@ -10,9 +11,12 @@ switch ($act) {
         break;
 
     case 'register' :
+        Auth::getAuth('19', 'write');
+
         $admin = new Admin;
         if ($admin->doRegister($request)) {
             $message = "등록되었습니다.";
+            $opener_reload = true;
             $close = true;
         } else {
             $message = "등록에 실패하였습니다.";
@@ -23,6 +27,8 @@ switch ($act) {
         break;
 
     default :
+        Auth::getAuth('12', 'read');
+
         $request['scale'] = ((int) $request['scale'] > 0)? $request['scale']:50;
         $params = $request;
         unset($params['scale']);

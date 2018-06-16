@@ -14,139 +14,89 @@
             <!-- BOX 시작 -->
             <div class="box">
                 <h3>권한그룹 리스트</h3>
-                <form name="frm_auth" action="" method="GET">
+                <form name="frm_auth" action="" method="POST">
+                <input type="hidden" name="act" value="apply">
                 <div class="search_box">
+                    <?php if (sizeof($list) > 0):?>
                     <select name="auth">
                         <?php foreach ($list as $l):?>
                         <option value="<?=$l['id']?>" <?=($l['id'] == $request['auth'])?'selected="selected"':''?>><?=$l['name']?></option>
                         <?php endforeach;?>
                     </select>
-                    <button type="button" class="btn btn_black btn-modify">권한그룹 이름 수정</button> <button type="button" class="btn btn_red btn-register">권한그룹 등록</button>
+                    <button type="button" class="btn btn_black btn-modify">권한그룹 이름 수정</button>
+                    <?php endif;?>
+                    <button type="button" class="btn btn_red btn-register">권한그룹 등록</button>
                 </div>
 
                 <div class="clear" style="margin-bottom:5px;"></div>
-
+                <?php if (sizeof($list) > 0):?>
                 <table class="table_list">
                     <tr>
                         <th scope="col">메뉴/분류</th>
                         <th scope="col">대분류</th>
                         <th scope="col">중분류</th>
                     </tr>
+
+                    <?php foreach ($menu_array as $ma):?>
                     <tr>
-                        <th>Job</th>
-                        <td><strong>Job 리스트</strong>
-                            <input name="" type="checkbox" id="ad01" onclick="" value="읽기" checked=""> <label for="ad01">읽기</label>&nbsp;
-                            <input name="" type="checkbox" id="ad02" onclick="" value="쓰기"> <label for="ad02">쓰기</label>
+                        <th rowspan="<?=$ma['rowspan']?>"><?=$ma['name']?></th>
+                        <?php if (sizeof($ma['child']) > 0): $c1 = 0;?>
+                            <?php foreach ($ma['child'] as $cate1):?>
+                                <?=($c1 > 0)?'<tr>':''?>
+                        <td rowspan="<?=$cate1['rowspan']?>"><strong><?=$cate1['name']?></strong>
+                            <label><input name="menu[<?=$cate1['id']?>][read]" type="checkbox" value="Y" <?=($auth_menu_array[$cate1['id']]['read'] == 'Y')?'checked="checked"':''?>> 읽기</label>&nbsp;
+                            <label><input name="menu[<?=$cate1['id']?>][write]" type="checkbox" value="Y" <?=($auth_menu_array[$cate1['id']]['write'] == 'Y')?'checked="checked"':''?>> 쓰기</label>
                         </td>
-                        <td><strong>등록 페이지</strong>
-                            <input name="" type="checkbox" id="ad03" onclick="" value="읽기" checked=""> <label for="ad03">읽기</label>&nbsp;
-                            <input name="" type="checkbox" id="ad04" onclick="" value="쓰기"> <label for="ad04">쓰기</label>
+                                <?php if (sizeof($cate1['child']) > 0): $c2 = 0?>
+                                    <?php foreach ($cate1['child'] as $cate2):?>
+                                        <?=($c2 > 0)?'<tr>':''?>
+                        <td><strong><?=$cate2['name']?></strong>
+                            <label><input name="menu[<?=$cate2['id']?>][read]" type="checkbox" value="Y" <?=($auth_menu_array[$cate2['id']]['read'] == 'Y')?'checked="checked"':''?>> 읽기</label>&nbsp;
+                            <label><input name="menu[<?=$cate2['id']?>][write]" type="checkbox" value="Y" <?=($auth_menu_array[$cate2['id']]['write'] == 'Y')?'checked="checked"':''?>> 쓰기</label>
                         </td>
+                                        <?=($c2 > 0)?'</tr>':''?>
+                                    <?php $c2++; endforeach;?>
+                                <?php else:?>
+                        <td></td>
+                                <?php endif;?>
+                                <?=($c1 > 0)?'</tr>':''?>
+                            <?php $c1++; endforeach;?>
+                        <?php else:?>
+                        <td></td>
+                        <td></td>
+                        <?php endif;?>
                     </tr>
-                    <tr>
-                        <th rowspan="3">통계</th>
-                        <td><strong>일반 통계</strong>
-                            <input name="" type="checkbox" id="ad17" onclick="" value="읽기" checked=""> <label for="ad17">읽기</label>&nbsp;
-                            <input name="" type="checkbox" id="ad18" onclick="" value="쓰기"> <label for="ad18">쓰기</label>
-                        </td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td><strong>응용프로그램 통계</strong>
-                            <input name="" type="checkbox" id="ad19" onclick="" value="읽기" checked=""> <label for="ad19">읽기</label>&nbsp;
-                            <input name="" type="checkbox" id="ad20" onclick="" value="쓰기"> <label for="ad20">쓰기</label>
-                        </td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Job 통계</strong>
-                            <input name="" type="checkbox" id="ad23" onclick="" value="읽기" checked=""> <label for="ad23">읽기</label>&nbsp;
-                            <input name="" type="checkbox" id="ad24" onclick="" value="쓰기"> <label for="ad24">쓰기</label>
-                        </td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <th rowspan="3">클라이언트</th>
-                        <td><strong>OS 언어별 설정</strong>
-                            <input name="" type="checkbox" id="ad35" onclick="" value="읽기" checked=""> <label for="ad35">읽기</label>&nbsp;
-                            <input name="" type="checkbox" id="ad36" onclick="" value="쓰기"> <label for="ad36">쓰기</label>
-                        </td>
-                        <td><strong>응용프로그램별 설정</strong>
-                            <input name="" type="checkbox" id="ad37" onclick="" value="읽기" checked=""> <label for="ad37">읽기</label>&nbsp;
-                            <input name="" type="checkbox" id="ad38" onclick="" value="쓰기"> <label for="ad38">쓰기</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>클라이언트 공통 설정 </strong>
-                            <input name="" type="checkbox" id="ad35" onclick="" value="읽기" checked=""> <label for="ad35">읽기</label>&nbsp;
-                            <input name="" type="checkbox" id="ad36" onclick="" value="쓰기"> <label for="ad36">쓰기</label>
-                        </td>
-                        <td><strong>등록 페이지</strong>
-                            <input name="" type="checkbox" id="ad37" onclick="" value="읽기" checked=""> <label for="ad37">읽기</label>&nbsp;
-                            <input name="" type="checkbox" id="ad38" onclick="" value="쓰기"> <label for="ad38">쓰기</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>클라이언트 리스트</strong>
-                            <input name="" type="checkbox" id="ad39" onclick="" value="읽기" checked=""> <label for="ad39">읽기</label>&nbsp;
-                            <input name="" type="checkbox" id="ad40" onclick="" value="쓰기"> <label for="ad40">쓰기</label>
-                        </td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <th rowspan="3">기타</th>
-                        <td><strong>관리자 리스트</strong>
-                            <input name="" type="checkbox" id="ad43" onclick="" value="읽기" checked=""> <label for="ad43">읽기</label>&nbsp;
-                            <input name="" type="checkbox" id="ad44" onclick="" value="쓰기"> <label for="ad44">쓰기</label>
-                        </td>
-                        <td><strong>등록 페이지</strong>
-                            <input name="" type="checkbox" id="ad45" onclick="" value="읽기" checked=""> <label for="ad45">읽기</label>&nbsp;
-                            <input name="" type="checkbox" id="ad46" onclick="" value="쓰기"> <label for="ad46">쓰기</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>권한그룹 리스트</strong>
-                            <input name="" type="checkbox" id="ad47" onclick="" value="읽기" checked=""> <label for="ad47">읽기</label>&nbsp;
-                            <input name="" type="checkbox" id="ad48" onclick="" value="쓰기"> <label for="ad48">쓰기</label>
-                        </td>
-                        <td><strong>등록 페이지</strong>
-                            <input name="" type="checkbox" id="ad49" onclick="" value="읽기" checked=""> <label for="ad49">읽기</label>&nbsp;
-                            <input name="" type="checkbox" id="ad50" onclick="" value="쓰기"> <label for="ad50">쓰기</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>개발사 리스트</strong>
-                            <input name="" type="checkbox" id="ad51" onclick="" value="읽기" checked="">
-                            <label for="ad51">읽기</label>
-                            &nbsp;
-                            <input name="" type="checkbox" id="ad52" onclick="" value="쓰기">
-                            <label for="ad52">쓰기</label></td>
-                        <td><strong>등록 페이지</strong>
-                            <input name="" type="checkbox" id="ad53" onclick="" value="읽기" checked="">
-                            <label for="ad53">읽기</label>
-                            &nbsp;
-                            <input name="" type="checkbox" id="ad54" onclick="" value="쓰기">
-                            <label for="ad54">쓰기</label></td>
-                    </tr>
+                    <?php endforeach;?>
                 </table>
 
                 <!-- 적용하기 추가 16.09.22 -->
                 <div class="pager">
                     <button type="submit" class="btn btn_bottom btn_blue">적용하기</button>
                 </div>
+                <?php endif;?>
                 </form>
             </div>
 <script type="text/javascript">
     $(function () {
         var frm = $('form[name=frm_auth]');
 
-        $('.btn-register').on('click', function (e) {
+        frm.find('select[name=auth]').on('change', function() {
+            location.href = location.pathname + '?auth=' + $(this).val();
+        });
+
+        frm.find('.btn-register').on('click', function (e) {
             e.preventDefault();
             popupOpen('<?=_WEB_ROOT?>/auth.php?act=registerPop', 'authRegister', 700, 250);
         });
-        $('.btn-modify').on('click', function (e) {
+        frm.find('.btn-modify').on('click', function (e) {
             e.preventDefault();
             popupOpen('<?=_WEB_ROOT?>/auth.php?act=registerPop&id=' + frm.find('[name=auth]').val(), 'authModify', 700, 250);
+        });
+
+        frm.submit(function () {
+            if (Number(frm.find('[name=auth]').val()) == 0) {
+                return alter('등록된 권한그룹에 대해서만 권한을 적용할수 있습니다.');
+            }
         });
     });
 </script>

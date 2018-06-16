@@ -2,46 +2,45 @@
 
             <!--상단 히스토리, 데이터로딩-->
             <div class="history">
-                <span>▶</span>Job<span>▶</span><strong>Job 리스트</strong>
+                <span>▶</span>Job 리스트<span>▶</span><strong>Job 리스트</strong>
             </div>
 
             <div class="data_loading">
-                <span> IP : 192.168.2.173<strong><a href="#">관리자</a> 님 반갑습니다.</strong></span> <button class="btn" onclick="location.href='login.html';">LOGOUT</button>
+                <span> IP : <?=$_SERVER['REMOTE_ADDR']?><strong><a href="#"><?=$_SESSION['admin']['name']?></a> 님 반갑습니다.</strong></span>
+                <button class="btn" onclick="location.href='<?=_WEB_ROOT?>/login.php?act=logout';">LOGOUT</button>
             </div>
             <!--//상단 히스토리, 데이터로딩-->
 
             <!-- BOX 시작 -->
             <div class="box">
                 <h3>Job 리스트</h3>
+                <form name="frm_search" action="" method="GET">
                 <div class="search_box">
-
-                    <select name="" >
-                        <option>OS 언어</option>
-                        <option>OPTION1</option>
-                        <option>OPTION2</option>
+                    <select name="oslang" >
+                        <option value="">OS 언어</option>
                     </select>
 
-                    <select name="" >
-                        <option>모든 Job Type</option>
-                        <option>OPTION1</option>
-                        <option>OPTION2</option>
+                    <select name="jobtype" >
+                        <option value="">모든 Job Type</option>
                     </select>
 
-                    <select name="" >
-                        <option>상태</option>
-                        <option>정상</option>
-                        <option>정지</option>
+                    <select name="status" >
+                        <option value="">상태</option>
+                        <?php foreach (Job::$status as $v):?>
+                        <option value="<?=$v?>" <?=($v == $request['status'])?'selected="selected"':''?>><?=$v?></option>
+                        <?php endforeach;?>
                     </select>
 
-                    <input type="text" class="ad_box" placeholder="광고명" />
-                    <button class="btn btn_black">검색</button> <button class="btn btn_red">등록</button>
+                    <input type="text" name="jobname" class="ad_box" placeholder="Job 이름" />
+                    <button type="submit" class="btn btn_black">검색</button> <button type="button" class="btn btn_red btn-register">등록</button>
                 </div>
 
-                <select name="" class="" >
-                    <option>50줄</option>
-                    <option>100줄</option>
-                    <option>200줄</option>
+                <select name="scale" class="">
+                    <option value="50" <?=($request['scale'] == 50)?'selected="selected"':''?>>50줄</option>
+                    <option value="100" <?=($request['scale'] == 100)?'selected="selected"':''?>>100줄</option>
+                    <option value="200" <?=($request['scale'] == 200)?'selected="selected"':''?>>200줄</option>
                 </select>
+                </form>
 
                 <div class="clear" style="margin-bottom:5px;"></div>
 
@@ -60,179 +59,34 @@
                         <th scope="col">시작종료일일</th>
                         <th scope="col">동일 Job 실행제한시간(분)</th>
                     </tr>
+                    <?php
+                    $no = (($request['page'] - 1) * $request['scale']) + 1;
+                    foreach ($list as $l):?>
                     <tr>
                         <td><input name="" type="checkbox" ></td>
-                        <td>1</td>
-                        <td>223</td>
-                        <td class="taL">한국어</td>
-                        <td class="taL">네이버 연관검색어</td>
-                        <td class="taL">관리자가 입력한 텍스트 표시</td>
-                        <td class="taR">1</td>
-                        <td class="taR">1</td>
-                        <td>정상</td>
-                        <td>2018-01-03</td>
-                        <td>2018-12-24</td>
-                        <td class="taR">60</td>
+                        <td><?=$l['no']?></td>
+                        <td><?=$l['jobid']?></td>
+                        <td class="taL"><?=$l['oslang']?></td>
+                        <td class="taL"><?=$l['jobtype']?></td>
+                        <td class="taL"><?=$l['jobname']?></td>
+                        <td class="taR"><?=$l['weight']?></td>
+                        <td class="taR"><?=$l['steps']?></td>
+                        <td <?=($l['status'] == '정지')?'class="red2"':''?>><?=$l['status']?></td>
+                        <td><?=strlen($l['startdt'], 0, 10)?></td>
+                        <td><?=strlen($l['enddt'], 0, 10)?></td>
+                        <td class="taR"><?=$l['timelimit']?></td>
                     </tr>
+                    <?php endforeach;?>
                     <tr>
-                        <td><input name="" type="checkbox" ></td>
-                        <td>2</td>
-                        <td>278</td>
-                        <td class="taL">일본어</td>
-                        <td class="taL">야후재팬 연관검색어</td>
-                        <td class="taL"><a href="#" style="text-decoration:underline; color:blue">상세정보 팝업페이지 호출링크</a></td>
-                        <td class="taR">10,000</td>
-                        <td class="taR">1</td>
-                        <td class="red2">정지</td>
-                        <td>2018-01-03</td>
-                        <td>2018-12-24</td>
-                        <td class="taR">600</td>
-                    </tr><tr>
-                    <td><input name="" type="checkbox" ></td>
-                    <td>3</td>
-                    <td>259</td>
-                    <td class="taL">영어</td>
-                    <td class="taL">네이버 블로그 랭킹</td>
-                    <td class="taL">&nbsp;</td>
-                    <td class="taR">100</td>
-                    <td class="taR">1</td>
-                    <td>정상</td>
-                    <td>2018-01-03</td>
-                    <td>2018-12-24</td>
-                    <td class="taR">10,000</td>
-                </tr>
-                    <tr>
-                        <td><input name="" type="checkbox" ></td>
-                        <td>4</td>
-                        <td>280</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td><input name="" type="checkbox" ></td>
-                        <td>5</td>
-                        <td>209</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td><input name="" type="checkbox" ></td>
-                        <td>6</td>
-                        <td>280</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td><input name="" type="checkbox" ></td>
-                        <td>7</td>
-                        <td>209</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td><input name="" type="checkbox" ></td>
-                        <td>8</td>
-                        <td>280</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td><input name="" type="checkbox" ></td>
-                        <td>9</td>
-                        <td>209</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td><input name="" type="checkbox" ></td>
-                        <td>10</td>
-                        <td>280</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td><input name="" type="checkbox" ></td>
-                        <td>11</td>
-                        <td>209</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td><input name="" type="checkbox" ></td>
-                        <td>12</td>
-                        <td>209</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-
                 </table>
-
-                <div class="pager">
-                    <a href="#">Prev</a><a href="#" class="active">1</a><a href="#">2</a><a href="#">3</a><a href="#">4</a><a href="#">5</a><a href="#">6</a><a href="#">7</a><a href="#">8</a><a href="#">10</a><a href="#">Next</a>
-                </div>
-
+                <?=$page_html?>
             </div>
+<script type="text/javascript">
+    $(function () {
+        $('.btn-register').on('click', function (e) {
+            e.preventDefault();
+            popupOpen('<?=_WEB_ROOT?>/job.php?act=registerPop', 'jobRegister', 700, 250);
+        });
+    });
+</script>
 <?php require_once _VIEW_PATH . 'footer.html'; ?>

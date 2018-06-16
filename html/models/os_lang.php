@@ -1,14 +1,7 @@
 <?php
-class Menu
+class OsLang
 {
-    private  $table = 'menu';
-
-    public static $menu_icon = array(
-        'icon-folder-open',
-        'icon-align-left',
-        'icon-wrench',
-        'icon-cog',
-    );
+    private  $table = 'oslang';
 
     // 총 갯수
     public function getCount($params) {
@@ -58,8 +51,6 @@ SQL;
 SQL;
         if (sizeof($order_by) > 0) {
             $query .= ' ORDER BY ' . join(',', $order_by);
-        } else {
-            $query .= ' ORDER BY parent_id ASC, id ASC';
         }
 
         if ((int) $limit > 0) {
@@ -70,4 +61,30 @@ SQL;
 
         return $list;
     }
+
+    // 등록
+    public function doRegister($request) {
+        global $db_con;
+        $params = $request;
+
+        $set_field = array();
+        foreach ($params as $k => $v) {
+            if (strlen($v) == 0) {
+                continue;
+            }
+            $set_field[] = $k ."='" . $v ."'";
+        }
+        $field = join(',', $set_field);
+
+        $query =<<<SQL
+            INSERT INTO `{$this->table}` set {$field}
+SQL;
+
+        $result = $db_con->excute_query($query);
+        if ($result) {
+            return true;
+        }
+        return false;
+    }
+
 }

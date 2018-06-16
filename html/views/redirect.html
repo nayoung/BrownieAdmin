@@ -6,6 +6,17 @@
 </script>
 <?php endif;?>
 
+<?php if ($close == true):?>
+<script type="text/javascript">
+    if (window.opener != null) {
+        <?php if ($opener_reload == true):?>
+        window.opener.location.reload();
+        <?php endif;?>
+        self.close();
+    }
+</script>
+<?php endif; ?>
+
 <?php if ($back == true):?>
 <script type="text/javascript">
     history.back();
@@ -13,15 +24,6 @@
 <?php exit;
 endif; ?>
 
-<?php if ($close == true):?>
-<script type="text/javascript">
-    if (window.opener) {
-        window.opener.location.reload();
-        self.close();
-    }
-</script>
-<?php exit;
-endif; ?>
 
 <?php
     $url = (strlen($url) > 0) ? $url: $_SERVER['HTTP_REFERER'];

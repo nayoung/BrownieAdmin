@@ -24,18 +24,22 @@ class Admin
         $auth_array = array();
 
         $auth = new Auth;
-        $auth_list = $auth->getList(array('`auth_menu`.auth' => $admin_list[0]['auth']));
+        $auth_list = $auth->getAuthMenu($admin_list[0]['auth']);
         foreach ($auth_list as $a) {
             $auth_array[$a['menu']] = $a;
         }
 
         $menu = new Menu;
-        $menu_list = $menu->getList(array(), 0, 0, array('`menu`.parent_id ASC', '`menu`.id ASC'));
+        $menu_list = $menu->getList();
         foreach ($menu_list as $idx => $m) {
             if ((int) $m['parent_id'] > 0 && sizeof($path[$m['parent_id']]) > 0) {
-                $path[$m['parent_id']][] = array('menu' => $m, 'auth' => $auth_array[$m['id']]);
+                $m['read'] = $auth_array[$m['id']]['read'];
+                $m['write'] = $auth_array[$m['id']]['write'];
+                $path[$m['parent_id']][] = $m;
             } else if ((int) $m['parent_id'] == 0) {
-                $path[$m['id']][] = array('menu' => $m, 'auth' => $auth_array[$m['id']]);
+                $path[$m['id']][] = $m;
+            } else {
+                continue;
             }
 
             if ($first_page == '' && $auth_array[$m['id']]['read'] == 'Y') {
@@ -45,17 +49,28 @@ class Admin
 
         /*
         echo"<pre>";
-        echo"===";
-print_r($menu_list);
-print_r($path);
+        print_r($auth_list);
+        echo"================";
+        print_r($auth_array);
+        echo"================";
+        print_r($menu_list);
+        echo"================";
+        echo"<pre>";
+        print_r($path);
 
-echo "<br/>".$first_page."<br/>";
-        exit;
-        */
+        echo"================";
+        echo "<br/>".$first_page."<br/>";
+        exit;*/
+
+
+        if (strlen($first_page) == 0) {
+            return false;
+        }
 
         $_SESSION['admin'] = $admin_list[0];
-        $_SESSION['first_page'] = _WEB_ROOT . "/" . $first_page;
-        $_SESSION['path'] = array();
+        $_SESSION['first_page'] = _WEB_ROOT . $first_page;
+        $_SESSION['path'] = $path;
+        $_SESSION['auth'] = $auth_array;
 
         return true;
     }

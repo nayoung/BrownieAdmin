@@ -14,22 +14,20 @@ switch ($act) {
             include_once _VIEW_PATH . 'redirect.html';
         }
 
-        $message = '회원정보가 없습니다.';
+        $message = '회원정보가 없거나 권한이 없습니다.';
         $back = true;
         include_once _VIEW_PATH . 'redirect.html';
 
         break;
 
     case 'logout' :
-        $admin = new Admin;
+    default :
+    $admin = new Admin;
         $admin->doLogout();
 
         $url = _HTTP_HOST . _WEB_ROOT;
         include_once _VIEW_PATH . 'redirect.html';
 
-        break;
-
-    default :
         break;
 }
 

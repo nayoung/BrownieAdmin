@@ -47,14 +47,14 @@ $http_request = new Request($_GET, $_POST, $_FILE, $_SERVER, $_COOKIE);
 $request = $http_request->getRequest();
 
 session_start();
-//echo "<pre>";print_r($_SERVER);
+///echo "<pre>";print_r($_SERVER);
 //echo "<pre>";print_r($_SESSION);
 //exit;
 
 if (!in_array($_SERVER['PHP_SELF'], array(_WEB_ROOT . "/login.php")) && Admin::isLogin() == false) {
     // 로그인/로그아웃 페이지 아닌경우 + 로그인 전
     $url = _WEB_ROOT . '/login.php?act=login';
-   include_once _VIEW_PATH . 'redirect.html';
+    include_once _VIEW_PATH . 'redirect.html';
 
 } else if (in_array($_SERVER['PHP_SELF'], array(_WEB_ROOT . "/login.php")) && $request['act'] == 'login' && Admin::isLogin() == true) {
     // 로그인 페이지 + 로그인중
@@ -62,18 +62,7 @@ if (!in_array($_SERVER['PHP_SELF'], array(_WEB_ROOT . "/login.php")) && Admin::i
     include_once _VIEW_PATH . 'redirect.html';
 }
 
-if (false) {
-    // 권한 없을경우..
-    $message = '권한이 없습니다. 관리자에게 문의하세요.';
-    $back = true;
-    include_once _VIEW_PATH . 'redirect.html';
-}
 
 $act = $request['act'];
 unset($request['act']);
-
-
-//echo"<pre>";
-//print_r($_SESSION);
-//echo"</pre>";
 

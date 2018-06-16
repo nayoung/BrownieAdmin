@@ -3,28 +3,14 @@
     <!--전체메뉴보기//-->
     <div class="nav_all"><a href="javascript:" onclick="jQuery('.menu_all').fadeToggle(500);">전체메뉴보기</a></div>
     <div class="menu_all" onclick="jQuery('.menu_all').fadeOut(200);" >
+        <?php foreach ($_SESSION['path'] as $idx => $menu):?>
         <ul>
-            <h3>Job</h3>
-            <li><a href="sub_01_1.html"><span>Job 리스트</span></a></li>
+            <h3><?=$menu[0]['name']?></h3>
+            <?php foreach($menu as $sub_menu): if ($sub_menu['parent_id'] == 0): continue; endif;?>
+            <li><a href="<?=($sub_menu['read'] == 'Y')?_WEB_ROOT . $sub_menu['url']:'#'?>" <?=($sub_menu['read'] == 'Y')?'':'class="deny"'?>><span><?=$sub_menu['name']?></span></a></li>
+            <?php endforeach;?>
         </ul>
-        <ul>
-            <h3>통계</h3>
-            <li><a href="sub_02_1.html"><span>일반 통계</span></a></li>
-            <li><a href="sub_02_2.html"><span>응용프로그램 통계</span></a></li>
-            <li><a href="sub_02_3.html"><span>Job 통계</span></a></li>
-        </ul>
-        <ul>
-            <h3>클라이언트</h3>
-            <li><a href="sub_03_1.html"><span>OS 언어별 설정</span></a></li>
-            <li><a href="sub_03_2.html"><span>응용프로그램별 설정</span></a></li>
-            <li><a href="sub_03_3.html"><span>클라이언트 공통 설정</span></a></li>
-        </ul>
-        <ul>
-            <h3>계정 및 권한</h3>
-            <li><a href="sub_04_1.html"><span>관리자 리스트</span></a></li>
-            <li><a href="sub_04_2.html"><span>관리자 권한그룹 리스트</span></a></li>
-            <li><a href="sub_04_3.html"><span>개발사 리스트</span></a></li>
-        </ul>
+        <?php endforeach;?>
     </div>
 
     <!--//상단메뉴-->
@@ -33,34 +19,17 @@
 
         <!--왼쪽메뉴-->
         <div id="leftmenu" class="leftmenu">
-            <div class="logo"><strong><a href="sub_01_1.html">Brownie</a></strong></div>
+            <div class="logo"><strong><a href="<?=$_SESSION['first_page']?>">Brownie</a></strong></div>
             <ul>
-                <li class="active"><a href="#"><i class="icon-folder-open"></i> Job 리스트</a>
+                <?php $idx = 0; foreach ($_SESSION['path'] as $menu):?>
+                <li class="active"><a href="#"><i class="<?=Menu::$menu_icon[$idx]?>"></i><?=$menu[0]['name']?></a>
                     <ul style="display:block;">
-                        <li><a href="sub_01_1.html"><span>Job 리스트</span></a></li>
+                        <?php foreach($menu as $sub_menu): if ($sub_menu['parent_id'] == 0): continue; endif;?>
+                        <li><a href="<?=($sub_menu['read'] == 'Y')?_WEB_ROOT . $sub_menu['url']:'#'?>" <?=($sub_menu['read'] == 'Y')?'':'class="deny"'?>><span><?=$sub_menu['name']?></span></a></li>
+                        <?php endforeach;?>
                     </ul>
                 </li>
-                <li class="active"><a href="#"><i class="icon-align-left"></i> 통계</a>
-                    <ul style="display:none;">
-                        <li><a href="sub_02_1.html"><span>일반 통계</span></a></li>
-                        <li><a href="sub_02_2.html"><span>응용프로그램 통계</span></a></li>
-                        <li><a href="sub_02_3.html"><span>Job 통계</span></a></li>
-                    </ul>
-                </li>
-                <li class="active"><a href="#"><i class="icon-wrench"></i> 클라이언트</a>
-                    <ul style="display:none;">
-                        <li><a href="sub_03_1.html"><span>OS 언어별 설정</span></a></li>
-                        <li><a href="sub_03_2.html"><span>응용프로그램별 설정</span></a></li>
-                        <li><a href="sub_03_3.html"><span>클라이언트 공통 설정</span></a></li>
-                    </ul>
-                </li>
-                <li class="active"><a href="#"><i class="icon-cog"></i> 기타</a>
-                    <ul style="display:none;">
-                        <li><a href="sub_04_1.html"><span>관리자 리스트</span></a></li>
-                        <li><a href="sub_04_2.html"><span>관리자 권한그룹 리스트</span></a></li>
-                        <li><a href="sub_04_3.html"><span>개발사 리스트</span></a></li>
-                    </ul>
-                </li>
+                <?php $idx++; endforeach;?>
             </ul>
         </div>
 

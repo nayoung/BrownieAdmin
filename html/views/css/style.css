@@ -34,7 +34,7 @@ table, tbody, tfoot, thead, th, tr, tdvideo, tt,
 u, ul, 
 var{ background: transparent; border: 0 none; font-size: 100%; margin: 0; padding: 0; vertical-align: baseline; }
 html, body {height:100%; -webkit-text-adjust:none;}
-body { -webkit-text-adjust:none; padding:0; margin:0;font-family:nanumSqure, 나눔고딕, AppleSDGothicNeo, sans-serif; color:#444; font-size:13px; line-height:1.2em; color:#555;  background-image:url(images/ptn_body.png); background-repeat:repeat; background-color:#ffffff; }
+body { -webkit-text-adjust:none; padding:0; margin:0;font-family:nanumSqure, 나눔고딕, AppleSDGothicNeo, sans-serif; color:#444; font-size:13px; line-height:1.2em; color:#555;  background-image:url(../images/ptn_body.png); background-repeat:repeat; background-color:#ffffff; }
 img {display:block; border:none; }
 *::-moz-selection {background-color: #ffbf12; color: #fff;}
 *::selection {background-color: #ffbf12; color: #fff;}
