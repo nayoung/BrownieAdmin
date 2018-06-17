@@ -17,6 +17,17 @@ switch ($act) {
     case 'register' :
         Auth::getAuth('21', 'write');
 
+        if (strlen($request['id']) > 0) {
+            $admin = new Admin;
+            $admin_cnt = $admin->getCount(array('id' => $request['id']));
+
+            if ((int) $admin_cnt == 0) {
+                $message = "파트너 로그인ID로 등록된 관리자ID가 없습니다.";
+                $back = true;
+                include_once _VIEW_PATH . 'redirect.html';
+            }
+        }
+
         $develop = new Develop;
         if ($develop->doRegister($request)) {
             $message = "등록되었습니다.";

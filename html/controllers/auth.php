@@ -17,6 +17,13 @@ switch ($act) {
 
         $auth = new Auth;
         if ((int) $request['id'] > 0) {
+            $auth_cnt = $auth->getCount(array('name' => $request['name'], 'not_id' => (int) $request['id']));
+            if ((int) $auth_cnt > 0) {
+                $message = "중복된 권한그룹명 입니다.";
+                $back = true;
+                include_once _VIEW_PATH . 'redirect.html';
+            }
+
             if ($auth->doModify($request)) {
                 $message = "수정되었습니다.";
                 $opener_reload = true;
@@ -26,6 +33,13 @@ switch ($act) {
                 $back = true;
             }
         } else {
+            $auth_cnt = $auth->getCount(array('name' => $request['name']));
+            if ((int) $auth_cnt > 0) {
+                $message = "중복된 권한그룹명 입니다.";
+                $back = true;
+                include_once _VIEW_PATH . 'redirect.html';
+            }
+
             if ($auth->doRegister($request)) {
                 $message = "등록되었습니다.";
                 $opener_reload = true;

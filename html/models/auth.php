@@ -3,6 +3,38 @@ class Auth
 {
     private  $table = 'auth';
 
+    // 총 갯수
+    public function getCount($params) {
+        global $db_con;
+        $total = 0;
+
+        $where = array();
+        foreach ($params as $k => $v) {
+            if (strlen($v) == 0) {
+                continue;
+            }
+
+            if ($k == 'not_id') {
+                $where[] = "id !='" . $v ."'";
+            } else {
+                $where[] = $k ."='" . $v ."'";
+            }
+        }
+        $where = join(' AND ', $where);
+        if (strlen($where) > 0) {
+            $where = ' WHERE ' . $where;
+        }
+
+        $query =<<<SQL
+            SELECT count(1) AS cnt FROM `{$this->table}` {$where}
+SQL;
+
+        $result = $db_con->getRow($query);
+        $total = $result['cnt'];
+
+        return $total;
+    }
+
     public function getList($params = array(), $offset = 0, $limit = 0, $order_by= array()) {
         global $db_con;
         $list = array();

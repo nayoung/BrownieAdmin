@@ -119,6 +119,12 @@ $(function() {
 		return alert('권한이 없습니다. 관리자에게 문의하세요.');
 	});
 
+	$('#btn-logout').on('click', function(e) {
+		e.preventDefault();
+
+        location.href = _WEB_ROOT + '/login.php?act=logout';
+	});
+
 });
 
 var popupOpen = function (url, title, width = 500, height = 300) {

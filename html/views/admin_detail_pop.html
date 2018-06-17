@@ -38,5 +38,21 @@
             </form>
         </div>
     </div>
+<script type="text/javascript">
+    $(function() {
+        $('form[name=frm_register]').submit(function () {
+            var bool = true;
+            $(this).find('table input,table select').each(function (idx, data) {
+                if ($.trim($(this).val()) == '') {
+                    bool = false;
+                    alert('값이 입력되지 않은 항목이 있습니다.');
+                    $(this).focus();
+                    return false;
+                }
+            });
 
+            return bool;
+        });
+    });
+</script>
 <?php require_once _VIEW_PATH . 'footer.html'; ?>

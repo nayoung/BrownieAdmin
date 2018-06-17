@@ -3,6 +3,11 @@ class OsLang
 {
     private  $table = 'oslang';
 
+    public static $status = array(
+        '집행',
+        '정지',
+    );
+
     // 총 갯수
     public function getCount($params) {
         global $db_con;
@@ -78,6 +83,36 @@ SQL;
 
         $query =<<<SQL
             INSERT INTO `{$this->table}` set {$field}
+SQL;
+
+        $result = $db_con->excute_query($query);
+        if ($result) {
+            return true;
+        }
+        return false;
+    }
+
+    // 수정
+    public function doModify($request) {
+        global $db_con;
+        $params = $request;
+        if (strlen($params['code']) == 0) {
+            return false;
+        }
+        $code = $params['code'];
+        unset($params['code']);
+
+        $set_field = array();
+        foreach ($params as $k => $v) {
+            if (strlen($v) == 0) {
+                continue;
+            }
+            $set_field[] = $k ."='" . $v ."'";
+        }
+        $field = join(',', $set_field);
+
+        $query =<<<SQL
+            UPDATE `{$this->table}` SET {$field} WHERE code = '{$code}'
 SQL;
 
         $result = $db_con->excute_query($query);

@@ -7,7 +7,7 @@
 
             <div class="data_loading">
                 <span> IP : <?=$_SERVER['REMOTE_ADDR']?><strong><a href="#"><?=$_SESSION['admin']['name']?></a> 님 반갑습니다.</strong></span>
-                <button class="btn" onclick="location.href='<?=_WEB_ROOT?>/login.php?act=logout';">LOGOUT</button>
+                <button id="btn-logout" class="btn" >LOGOUT</button>
             </div>
             <!--//상단 히스토리, 데이터로딩-->
 
@@ -16,19 +16,21 @@
 
             <div class="box">
                 <h3>클라이언트 공통 설정</h3>
+                <form name="frm_search" action="" method="GET">
                 <div class="search_box">
-
-                    <input type="text" class="ad_box" placeholder="모든 응용프로그램" />
-                    <button class="btn btn_black">검색</button> <button class="btn btn_red">등록</button>
+                    <button type="button" class="btn btn_black btn-apply">업데이트</button>
                 </div>
 
-                <select name="" class="" >
-                    <option>50줄</option>
-                    <option>100줄</option>
-                    <option>200줄</option>
+                <select name="scale" class="">
+                    <option value="50" <?=($request['scale'] == 50)?'selected="selected"':''?>>50줄</option>
+                    <option value="100" <?=($request['scale'] == 100)?'selected="selected"':''?>>100줄</option>
+                    <option value="200" <?=($request['scale'] == 200)?'selected="selected"':''?>>200줄</option>
                 </select>
+                </form>
 
                 <div class="clear" style="margin-bottom:5px;"></div>
+                <form name="frm_common" action="<?=_WEB_ROOT?>/client.php">
+                <input type="hidden" name="act" value="commonApply">
                 <table class="table table_striped">
                     <tr>
                         <th scope="col">응용프로그램 이름</th>
@@ -71,71 +73,7 @@
                             시간</td>
                         <td>이 시간이 지난 Job 정보는 무효 처리함</td>
                     </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
                 </table>
-                <div class="pager">
-                    <a href="#">Prev</a><a href="#" class="active">1</a><a href="#">2</a><a href="#">3</a><a href="#">4</a><a href="#">5</a><a href="#">6</a><a href="#">7</a><a href="#">8</a><a href="#">10</a><a href="#">Next</a>
-                </div>
-
+                </form>
             </div>
-
 <?php require_once _VIEW_PATH . 'footer.html'; ?>

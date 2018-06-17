@@ -2,6 +2,51 @@
 require_once dirname(__FILE__) . '/../../conf/config.php';
 
 switch ($act) {
+    case 'softwareRegisterPop' :
+        Auth::getAuth('17', 'read');
+
+        if ((int) $request['idx'] > 0) {
+            $client = new Client;
+            $client_list = $client->getList(array('idx' => $request['idx']));
+        }
+
+        $develop = new Develop;
+        $develop_list = $develop->getList();
+
+        include_once _VIEW_PATH . 'client_software_detail_pop.html';
+        break;
+
+    case 'softwareRegister' :
+        Auth::getAuth('17', 'write');
+
+        $client = new Client;
+        if ($client->doRegister($request)) {
+            $message = "등록되었습니다.";
+            $opener_reload = true;
+            $close = true;
+        } else {
+            $message = "등록에 실패하였습니다.";
+            $back = true;
+        }
+
+        include_once _VIEW_PATH . 'redirect.html';
+        break;
+
+    case 'softwareModify' :
+        Auth::getAuth('17', 'write');
+
+        $client = new Client;
+        if ($client->doModify($request)) {
+            $message = "수정되었습니다.";
+            $opener_reload = true;
+            $close = true;
+        } else {
+            $message = "수정에 실패하였습니다.";
+            $back = true;
+        }
+
+        include_once _VIEW_PATH . 'redirect.html';
+        break;
     case 'software' :
         Auth::getAuth('10', 'read');
 
@@ -22,6 +67,22 @@ switch ($act) {
         include_once _VIEW_PATH . 'client_software_setting.html';
         break;
 
+    case 'commonApply' :
+        Auth::getAuth('18', 'write');
+
+        $common = new Common;
+        if ($client->doRegister($request)) {
+            $message = "등록되었습니다.";
+            $opener_reload = true;
+            $close = true;
+        } else {
+            $message = "등록에 실패하였습니다.";
+            $back = true;
+        }
+
+        include_once _VIEW_PATH . 'redirect.html';
+        break;
+
     case 'common' :
         Auth::getAuth('11', 'read');
 
@@ -29,7 +90,7 @@ switch ($act) {
         $params = $request;
         unset($params['scale']);
         unset($params['page']);
-
+exit;
         $common = new Common;
         $total = $common->getCount($params);
 
@@ -41,6 +102,56 @@ switch ($act) {
         include_once _VIEW_PATH . 'client_common_setting.html';
         break;
 
+    case 'oslangRegisterPop' :
+        Auth::getAuth('16', 'read');
+
+        if (strlen($request['code']) > 0) {
+            $oslang = new OsLang;
+            $oslang_list = $oslang->getList(array('code' => $request['code']));
+        }
+
+        include_once _VIEW_PATH . 'client_so_language_detail_pop.html';
+        break;
+
+    case 'oslangRegister' :
+        Auth::getAuth('16', 'write');
+
+        $oslang = new OsLang;
+
+        $oslang_cnt = $oslang->getCount(array('code' => $request['code']));
+        if ((int) $oslang_cnt > 0) {
+            $message = "중복된 언어코드 입니다.";
+            $back = true;
+            include_once _VIEW_PATH . 'redirect.html';
+        }
+
+        if ($oslang->doRegister($request)) {
+            $message = "등록되었습니다.";
+            $opener_reload = true;
+            $close = true;
+        } else {
+            $message = "등록에 실패하였습니다.";
+            $back = true;
+        }
+
+        include_once _VIEW_PATH . 'redirect.html';
+        break;
+    case 'oslangModify' :
+        Auth::getAuth('16', 'write');
+
+        $oslang = new OsLang;
+        if ($oslang->doModify($request)) {
+            $message = "수정되었습니다.";
+            $opener_reload = true;
+            $close = true;
+        } else {
+            $message = "수정에 실패하였습니다.";
+            $back = true;
+        }
+
+        include_once _VIEW_PATH . 'redirect.html';
+        break;
+
     case 'oslang' :
     default :
         Auth::getAuth('9', 'read');
@@ -50,14 +161,14 @@ switch ($act) {
         unset($params['scale']);
         unset($params['page']);
 
-        $os_lang = new OsLang;
-        $total = $os_lang->getCount($params);
+        $oslang = new OsLang;
+        $total = $oslang->getCount($params);
 
         $url = $_SERVER['PHP_SELF'];
         $page = new Page($request['page'], $total, $url, $params, $request['scale']);
         list($page_html, $offset, $limit) = $page->init();
 
-        $list = $os_lang->getList($params, $offset, $limit, array('code DESC'));
+        $list = $oslang->getList($params, $offset, $limit, array('code DESC'));
 
     include_once _VIEW_PATH . 'client_os_language_setting.html';
         break;

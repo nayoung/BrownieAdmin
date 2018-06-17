@@ -14,6 +14,13 @@ switch ($act) {
         Auth::getAuth('19', 'write');
 
         $admin = new Admin;
+        $admin_cnt = $admin->getCount(array('id' => $request['id']));
+        if ((int) $admin_cnt > 0) {
+            $message = "중복된 ID 입니다.";
+            $back = true;
+            include_once _VIEW_PATH . 'redirect.html';
+        }
+
         if ($admin->doRegister($request)) {
             $message = "등록되었습니다.";
             $opener_reload = true;
